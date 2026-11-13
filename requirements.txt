@@ -1,0 +1,2 @@
+# Install the canonical backend runtime dependencies.
+-r backend/requirements.txt
