@@ -1,24 +1,18 @@
-# MAILTRACE AI — Backend Production Dependencies
-# Install: pip install -r requirements.txt
-
-# Web framework
+# Runtime dependencies for the MAILTRACE FastAPI backend.
 fastapi>=0.111.0
 uvicorn[standard]>=0.29.0
-
-# Data validation and settings
 pydantic>=2.7.0
 pydantic-settings>=2.3.0
+SQLAlchemy>=2.0.0
+python-dotenv>=1.0.0
 
-# Google Gmail API libraries
+# Gmail OAuth and API integration
 google-api-python-client>=2.130.0
 google-auth>=2.29.0
 google-auth-oauthlib>=1.2.0
 google-auth-httplib2>=0.2.0
 
-# DNS and email authentication (Chunk 3)
+# Email authentication and network clients
 dnspython>=2.6.0
 dkimpy>=1.1.0
-
-# Machine Learning / DistilBERT inference (Chunk 4)
-torch>=2.0.0
-transformers>=4.40.0
+httpx>=0.27.0
