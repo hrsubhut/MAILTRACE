@@ -1,0 +1,52 @@
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+credentials.json
+token.json
+client_secret*.json
+backend/.secrets/
+*.pem
+*.key
+
+# Mailbox and forensic evidence: never commit private user mail
+*.eml
+*.msg
+*.mbox
+
+# Node / Expo
+node_modules/
+dist/
+build/
+.vite/
+.expo/
+web-build/
+
+# Logs and local databases
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Large model checkpoints are distributed separately from source
+ml/models/**/*.safetensors
+ml/models/**/*.bin
+ml/models/**/*.pt
+ml/models/**/*.pth
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
