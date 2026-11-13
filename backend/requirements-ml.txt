@@ -1,0 +1,4 @@
+# Optional dependencies for local transformer-backed threat classification.
+# Install after obtaining and verifying the dataset3_v1.0.0 checkpoint.
+torch>=2.0.0
+transformers>=4.40.0
