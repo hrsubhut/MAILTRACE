@@ -1,0 +1,56 @@
+name: Expand project source archive
+
+on:
+  push:
+    branches:
+      - chore/production-ready-repository
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: expand-source-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  expand-source:
+    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[source-expanded]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Expand the supplied source archive
+        run: python .github/scripts/expand_project_archive.py
+
+      - name: Validate Python syntax
+        run: python -m compileall -q backend forensics graph intelligence ml
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Validate frontend types
+        working-directory: frontend
+        run: |
+          npm ci
+          npx tsc --noEmit
+
+      - name: Commit expanded source tree
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No source changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: expand project source tree [source-expanded]"
+          git push origin "HEAD:${{ github.ref_name }}"
